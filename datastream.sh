@@ -83,7 +83,7 @@ if [ -z "${APIKEY}" ]; then
   read -sp "x-api-key: " APIKEY
 fi
 
-if [ "${1}" === "setup" ]; then
+if [ "${1}" == "setup" ]; then
   echo "${APIKEY}" > ~/.datastream
   exit 0
 fi
@@ -95,7 +95,10 @@ function request {
 	  echo "Error: No URL"
 	  exit 1
 	fi
-	res=$(curl -sG ${1} -H "Accept: application/vnd.api+json" -H "x-api-key: ${APIKEY}")
+ 	# TODO upgrade to ---http3, --http3-only when built into Mac/Win
+	# TODO upgrade to ---tlsv1.3 when built into Mac/Win
+	# echo curl --http2 --tlsv1.2 -sG ${1} -H "Accept: application/vnd.api+json" -H "x-api-key: *****"
+	res=$(curl --http2 --tlsv1.2 -sG ${1} -H "Accept: application/vnd.api+json" -H "x-api-key: ${APIKEY}")
 	
 	err=$(echo ${res} | jq -c '.errors')
 	if [ "${err}" != "null" ]; then
@@ -116,7 +119,7 @@ function request {
 }
 
 function urlconcat {
-	queryTop="\$top=${TOP}"
+	queryTop="\$top="$(urlencode "${TOP}")
 	querySelect=
 	if [ "${2}" != "" ]; then
 		querySelect="&\$select="$(urlencode "${2}")
