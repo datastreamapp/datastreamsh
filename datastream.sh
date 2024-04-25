@@ -24,7 +24,6 @@ fi
 
 # Defaults
 FORMAT=JSONSTREAM
-TOP=10000
 DOMAIN=api.datastream.org
 APIKEY_PATH=~/.datastream
 
@@ -173,22 +172,24 @@ function partitionRequest {
 
 # Commands
 function metadata {
-	# Pagination not supported on endpoint
-	TOP=10000
+	TOP=${TOP:=100}
 	url=$(urlconcat /v1/odata/v4/Metadata "${1}" "${2}")
 	request ${url}
 }
 
 function locations {
+	TOP=${TOP:=10000}
 	url=$(urlconcat /v1/odata/v4/Locations "${1}" "${2}")
 	request ${url}
 }
 
 function observations {
+	TOP=${TOP:=10000}
 	partitionRequest /v1/odata/v4/Observations "${1}" "${2}"
 }
 
 function records {
+	TOP=${TOP:=10000}
 	partitionRequest /v1/odata/v4/Records "${1}" "${2}"
 }
 
