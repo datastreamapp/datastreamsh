@@ -119,14 +119,14 @@ function request {
 }
 
 function urlconcat {
-	queryTop="\$top="$(urlencode "${TOP}")
+	queryTop="%24top="$(urlencode "${TOP}")
 	querySelect=
 	if [ "${2}" != "" ]; then
-		querySelect="&\$select="$(urlencode "${2}")
+		querySelect="&%24select="$(urlencode "${2}")
 	fi
 	queryFilter=
 	if [ "${3}" != "" ]; then
-		queryFilter="&\$filter="$(urlencode "${3}")
+		queryFilter="&%24filter="$(urlencode "${3}")
 	fi
 	echo "https://${DOMAIN}${1}?${queryTop}${querySelect}${queryFilter}"
 }
