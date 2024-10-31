@@ -97,6 +97,7 @@ function request {
 	fi
  	# TODO upgrade to ---http3, --http3-only when built into Mac/Win
 	# TODO upgrade to ---tlsv1.3 when built into Mac/Win
+        # TODO update to use --data-urlencode for each qs
 	# echo curl --http2 --tlsv1.2 -sG ${1} -H "Accept: application/vnd.api+json" -H "x-api-key: *****"
 	res=$(curl --http2 --tlsv1.2 -sG ${1} -H "Accept: application/vnd.api+json" -H "x-api-key: ${APIKEY}")
 	
