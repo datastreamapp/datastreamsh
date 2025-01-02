@@ -99,7 +99,7 @@ function request {
 	# TODO upgrade to ---tlsv1.3 when built into Mac/Win
         # TODO update to use --data-urlencode for each qs
 	# echo curl --http2 --tlsv1.2 -sG ${1} -H "Accept: application/vnd.api+json" -H "x-api-key: *****"
-	res=$(curl --http2 --tlsv1.2 -sG ${1} -H "Accept: application/vnd.api+json" -H "x-api-key: ${APIKEY}")
+	res=$(curl --http2 --tlsv1.2 -sG ${1} -H "Accept: application/vnd.api+json" -H "Accept-Encoding: br" -H "x-api-key: ${APIKEY}")
 	
 	err=$(echo ${res} | jq -c '.errors')
 	if [ "${err}" != "null" ]; then
